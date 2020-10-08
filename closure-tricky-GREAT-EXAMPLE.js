@@ -31,3 +31,41 @@ In JavaScript, variables with the same name can be specified at multiple layers 
 So in above, it takes the 'text' declared inside the function, but then only variable declaration is hoisted and NOT variable-assignment. So here, I am trying to print the 'outside' variable before assigning a value to it. So it prints undefined.
 
 */
+
+var c = 15
+
+function outer() {
+  console.log(c)
+  // the above will print 'undefined' instead of '15'
+  // because, just like the above example of 'Variable Shadowing', variable declaration is hoisted but not variable assignment,
+  // And variable declared inside the function-scope will take precedence over the one declared outside
+
+  var b = 10
+  var c = 25
+  function inner() {
+    var a = 20
+    console.log(a + b + c) // => but this will correctly print 55, because at this point I have the correct reference to all the variable values
+  }
+  return inner()
+}
+
+outer()
+
+/*
+
+Final output from outer()
+
+undefined
+55
+
+
+1 > https://medium.freecodecamp.org/javascript-closures-simplified-d0d23fa06ba4
+
+Function outer() finishes execution, and all variables within the scope of outer() now no longer exist.
+This last part is important to understand. Once a function completes its execution, any variables that were defined inside the function scope cease to exist.
+
+The lifespan of a variable defined inside of a function is the lifespan of the function execution.
+
+What this means is that in console.log(a+b), the variable b exists only during the execution of the the outer() function. Once the outer function has finished execution, the variable b no longer exists.
+
+ */
