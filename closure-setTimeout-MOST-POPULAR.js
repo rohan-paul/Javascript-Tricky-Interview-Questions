@@ -56,3 +56,48 @@ for (var i = 1; i <= arr2.length; i++) {
     i * 1000
   )
 }
+
+/*
+We pass the variable i into the outer function as a local variable named i_local, where we then return a function that will get the i_local for us.
+
+On the mechanics of setTimeOut() => setTimeout is a higher order function (i.e. a function that takes one or more functions as parameters - these function(s) passed as parameters are also known as callbacks). setTimeout has two arguments: the first argument is the function to be invoked (in this case the anonymous function with the alert call), and the second argument is a time interval in milliseconds.
+
+setTimeout's job, when called, is to immediately set a timer that will expire after a specified time interval (the second argument to setTimeout). When that timer expires, the code that is in the callback function of the first argument passed to setTimeout is executed (and when this callback function is executed, that's where the interesting effects of JS closures come in...
+
+setTimeout does not wait for the time interval to expire and then execute. setTimeout executes immediately. It is the callback function in setTimeout's first argument that waits/executes.
+
+Further Reading -
+1. https://medium.freecodecamp.org/3-questions-to-watch-out-for-in-a-javascript-interview-725012834ccb
+
+*/
+
+// SOLUTION - 3 - Use different iterator variable i and j
+
+for (var i = 1; i <= 3; i++) {
+  setTimeout(function () {
+    console.log(`i: ${i}`)
+  }, i * 1000)
+}
+
+/*  OUTPUT
+
+i: 4
+i: 4
+i: 4
+
+The reason the result gives 4,4,4 instead of 1,2,3 is because i is only one variable, and as we studied earlier, closure preserves access to variables (not value), so it preserves the value of the last instance of i.e. 4.
+
+To receive 3 different values, we needed 3 different variables, which can be achieved by using a block scoped declaration */
+
+for (var i = 1; i <= 3; i++) {
+  let j = i
+  setTimeout(function () {
+    console.log(`j: ${j}`)
+  }, j * 1000)
+}
+
+/* OUTPUT -
+j: 1
+j: 2
+j: 3
+It preserves separate values of j in each iteration. j runs every time as the loop iterates New j is created in every iteration */
