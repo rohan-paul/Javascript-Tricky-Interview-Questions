@@ -76,3 +76,28 @@ undefined
 ```
 
 - C. So the closure function **inner**() is getting the value of **b = 10** from its enclosing **outer()** function ever after **outer()** function has returned.
+
+#### Let us examine step-by-step what happens when X() is executed the first time:
+
+- 1. Variable a is created, and its value is set to 20.
+- 2. JavaScript now tries to execute a + b. Here is where things get interesting. JavaScript knows that a exists since it just created it. However, variable b no longer exists. Since b is part of the outer function, b would only exist while the outer() function is in execution. Since the outer() function finished execution long before we invoked X(), any variables within the scope of the outer function cease to exist, and hence variable b no longer exists.
+
+#### Closures
+
+- A. The inner function can access the variables of the enclosing function due to closures in JavaScript. In other words, the inner function preserves the scope chain of the enclosing function at the time the enclosing function was executed, and thus can access the enclosing function’s variables.
+
+- B. In our example, the inner function had preserved the value of b=10 when the outer() function was executed, and continued to preserve (closure) it.
+
+- C. It now refers to its scope chain and notices that it does have the value of variable b within its scope chain, since it had enclosed the value of b within a closure at the point when the outer function had executed.
+
+- D. Thus, JavaScript knows a=20 and b=10, and can calculate a+b.
+
+So the inner function has three scope chains:
+
+access to its own scope — variable a
+access to the outer function’s variables — variable b, which it enclosed
+access to any global variables that may be defined
+
+##### Further Reading
+
+[https://medium.freecodecamp.org/javascript-closures-simplified-d0d23fa06ba4](https://medium.freecodecamp.org/javascript-closures-simplified-d0d23fa06ba4)
